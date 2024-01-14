@@ -10,7 +10,7 @@ from models.place import Place
 from models.review import Review
 
 
-class HBNHBCMD(cmd.Cmd):
+class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     __all_cls = {
         "BaseModel", "User", "State", "City", "Amenity",
@@ -123,4 +123,4 @@ class HBNHBCMD(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    HBNHBCMD().cmdloop()
+    HBNBCommand().cmdloop()
