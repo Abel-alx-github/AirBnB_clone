@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         line = str.split(line)
-        if line[0] in HBNHBCMD.__all_cls:
+        if line[0] in HBNBCommand.__all_cls:
             print(eval(line[0])().id)
             storage.save()
         else:
