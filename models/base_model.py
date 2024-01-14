@@ -6,6 +6,8 @@ from datetime import datetime
 
 
 class BaseModel:
+    """defines all common attributes/methods for other classes: """
+
     def __init__(self, *args, **kwargs):
         """init instance:
         """
@@ -24,13 +26,18 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
+        """should print: [<class name>] (<self.id>) <self.__dict__>"""
         return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
+        """updates the public instance attribute updated_at
+        with the current datetime"""
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
+        """returns a dictionary containing all keys/values
+        of __dict__ of the instance"""
         dic = {key: val for key, val in (self.__dict__.items())}
         dic["__class__"] = self.__class__.__name__
         dic["created_at"] = self.created_at.isoformat()

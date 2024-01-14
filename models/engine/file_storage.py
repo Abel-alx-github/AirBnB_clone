@@ -17,19 +17,23 @@ class FileStorage:
     __objects = {}
 
     def all(self):
+        """ returns the dictionary __objects"""
         return self.__objects
 
     def new(self, obj):
+        """ sets in __objects the obj with key <obj class name>.id"""
         key = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[key] = obj
 
     def save(self):
+        """serializes __objects to the JSON file (path: __file_path)"""
         dic = {obj: self.__objects[obj].to_dict()
                for obj in self.__objects.keys()}
         with open(self.__file_path, 'w') as j_file:
             json.dump(dic, j_file)
 
     def reload(self):
+        """deserializes the JSON file to __objects (only if the JSON file"""
         try:
             with open(FileStorage.__file_path, 'r') as j_file:
                 obj_dic = json.load(j_file)
