@@ -29,23 +29,11 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """do nothing if the input is empty, newline"""
+        """Do nothing if the input is empty, newline"""
         pass
 
-    def help_quit(self):
-        """Display help for the quit command"""
-        print("Quit the program")
-
-    def help_EOF(self):
-        """Display help for the EOF command"""
-        print("Exit the program")
-
-    def help_help(self):
-        """Display help for the help command"""
-        print("Display available commands with their descriptions")
-
     def do_create(self, line):
-        """ create a new instance of BaseModel"""
+        """Create a new instance of BaseModel"""
         if line == "":
             print("** class name missing **")
             return
@@ -57,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, line):
-        """ shows string representation of an instance using class name + id"""
+        """Shows string representation of an instance using class name + id"""
         if line:
             cmd_flag = str.split(line)
             dic_from_storage = storage.all()
@@ -75,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_destroy(self, line):
-        """delete an instance based on class name and id"""
+        """Delete an instance based on class name and id"""
         if line:
             cmd = str.split(line)
             dic = storage.all()
@@ -89,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
 
     def do_all(self, line):
-        """ print all instances string format"""
+        """Print all instances string format"""
         cmd = str.split(line)
         if (cmd and cmd[0] in self.__all_cls) or len(cmd) == 0:
             dics = storage.all().values()
@@ -104,7 +92,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_update(self, line):
-        """ : Updates an instance based on the class name and
+        """Updates an instance based on the class name and
         id by adding or updating attribute (save the change
         into the JSON file)"""
 
