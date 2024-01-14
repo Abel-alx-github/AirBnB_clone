@@ -7,7 +7,7 @@ from models.base_model import BaseModel
 
 class Test_BaseModel(unittest.TestCase):
     """ class to test instance attriubute of BaseModel class's object"""
-    
+
     def test_class_type(self):
         self.assertEqual(BaseModel, type(BaseModel()))
 
@@ -18,9 +18,9 @@ class Test_BaseModel(unittest.TestCase):
         self.assertEqual(str, type(BaseModel().id))
 
     def test_public_id(self):
-       obj = BaseModel()
-       obj.id = 1000
-       self.assertEqual(1000, obj.id)
+        obj = BaseModel()
+        obj.id = 1000
+        self.assertEqual(1000, obj.id)
 
     def test_type_of_created_at(self):
         self.assertIs(datetime, type(BaseModel().created_at))
@@ -38,22 +38,23 @@ class Test_BaseModel(unittest.TestCase):
 
     def test_kwargs_BaseModel_init(self):
         updated = datetime.isoformat(datetime.now())
-        kw = {"id": 10, "created_at": updated, "updated_at": updated }
+        kw = {"id": 10, "created_at": updated, "updated_at": updated}
         obj = BaseModel(**kw)
         self.assertEqual(10, obj.id)
         self.assertEqual(obj.created_at, datetime.fromisoformat(updated))
         self.assertEqual(obj.updated_at, datetime.fromisoformat(updated))
+
 
 class Test_To_dict(unittest.TestCase):
     """ unittest for basemodel class method 'to_dict'"""
 
     def test_to_dict(self):
         updated = datetime.isoformat(datetime.now())
-        kw = {"id": 10, "created_at": updated, "updated_at": updated }
+        kw = {"id": 10, "created_at": updated, "updated_at": updated}
         obj = BaseModel(**kw)
         self.assertIn("__class__", obj.to_dict())
         self.assertIn("id", obj.to_dict())
-       
+
     def test_type_of_to_dict(self):
         obj = BaseModel()
         self.assertTrue(dict, type(obj.to_dict()))
@@ -68,6 +69,7 @@ class Test_To_dict(unittest.TestCase):
         obj = BaseModel()
         self.assertNotEqual(obj.to_dict, obj.__dict__)
 
+
 class Test_save_method(unittest.TestCase):
     """unittest fot save method of instance of BaseModel class"""
 
@@ -76,14 +78,8 @@ class Test_save_method(unittest.TestCase):
         old_update_time = obj.updated_at
         obj.save()
         self.assertLess(old_update_time, obj.updated_at)
-        
+
     def test_save_with_arg(self):
         with self.assertRaises(TypeError):
             obj = BaseModel()
             obj.save("something")
-
-
-
-
-
-

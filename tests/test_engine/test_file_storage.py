@@ -10,8 +10,9 @@ from models.city import City
 from models.place import Place
 from models.state import State
 from models.amenity import Amenity
-from models.review import Review 
+from models.review import Review
 import unittest
+
 
 class Test_FileStorage_cls_(unittest.TestCase):
     ''' class to test FileStorage clas,'''
@@ -29,7 +30,7 @@ class Test_FileStorage_cls_(unittest.TestCase):
 
     def test_cls_method_all(self):
         self.assertEqual(dict, type(FileStorage().all()))
-	   
+
     def test_cls_attr_type(self):
         self.assertEqual(str, type(FileStorage._FileStorage__file_path))
         self.assertEqual(dict, type(FileStorage._FileStorage__objects))
