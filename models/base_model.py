@@ -16,11 +16,12 @@ class BaseModel:
         self.updated_at = datetime.now()
         if kwargs:
             for key, val in kwargs.items():
-                if key == 'created_at':
-                    val = datetime.fromisoformat(val)
-                elif key == 'updated_at':
-                    val = datetime.fromisoformat(val)
-                setattr(self, key, val)
+                if key != '__class__':
+                    if key == 'created_at':
+                        val = datetime.fromisoformat(val)
+                    elif key == 'updated_at':
+                        val = datetime.fromisoformat(val)
+                    setattr(self, key, val)
         else:
             models.storage.new(self)
 
