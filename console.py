@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" a command interpreter to manage the AirBnB objects."""
 from models import storage
 import cmd
 from models.base_model import BaseModel
