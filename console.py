@@ -20,17 +20,29 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def do_quit(slef, line):
-        """ Quit command to exit the program"""
+        """Quit command to exit the program"""
         return True
 
     def do_EOF(self, line):
-        """ EOF command to exit the program, reached end of line"""
+        """EOF command to exit the program, reached end of line"""
         print()
         return True
 
     def emptyline(self):
-        """ do nothing if the input is empty, newline"""
+        """do nothing if the input is empty, newline"""
         pass
+
+    def help_quit(self):
+        """Display help for the quit command"""
+        print("Quit the program")
+
+    def help_EOF(self):
+        """Display help for the EOF command"""
+        print("Exit the program")
+
+    def help_help(self):
+        """Display help for the help command"""
+        print("Display available commands with their descriptions")
 
     def do_create(self, line):
         """ create a new instance of BaseModel"""
