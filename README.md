@@ -15,7 +15,12 @@
 - [Task 3 BaseModel](#task-3-baseModel)
 - [Task 4 Create BaseModel from dictionary](#task-4-create-baseModel-from-dictionary)
 - [Task 5 Store first object](#task-5-store-first-object)
- 
+- [Task 6 Console 0.0.1](#task-6-console-0.0.1)
+- [Task 7 Console 0.1](#task-7-console-0.1)
+- [Task 8 First User](#task-8-first-user)
+- [Task 9 More classes!](#task-9-more-classes!)
+- [Task 10 Console 1.0](#task-10-console-1.0)
+
 - [**Resources**](#resources) 
 
 
@@ -411,7 +416,265 @@ guillaume@ubuntu:~/AirBnB$
 
 ~~~
 
-### 
+### [Task 6 Console 0.0.1] <a name="task-6-console-0.0.1"></a>
+
+Write a program called console.py that contains the entry point of the command interpreter:
+
+- You must use the module cmd
+- Your class definition must be: class HBNBCommand(cmd.Cmd):
+- Your command interpreter should implement:
+- quit and EOF to exit the program
+- help (this action is provided by default by cmd but you should keep it updated and documented as you work through tasks)
+- a custom prompt: (hbnb)
+- an empty line + ENTER shouldn’t execute anything
+Your code should not be executed when imported
+Warning:
+
+You should end your file with:
+
+> if __name__ == '__main__':
+>   HBNBCommand().cmdloop()
+
+to make your program executable except when imported. Please don’t add anything around - the Checker won’t like it otherwise
+
+**Test like this**
+~~~
+guillaume@ubuntu:~/AirBnB$ ./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+
+(hbnb) 
+(hbnb) help quit
+Quit command to exit the program
+
+(hbnb) 
+(hbnb) 
+(hbnb) quit 
+guillaume@ubuntu:~/AirBnB$ 
+~~~
+
+### [Task 7 Console 0.1] <a name="task-7-console-0.1"></a>
+
+Update your command interpreter (console.py) to have these commands:
+
+* create: Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id.
+      > Ex: $ create BaseModel
+    * If the class name is missing, print
+      > ** class name missing ** (ex: $ create)
+    * If the class name doesn’t exist, print
+      > ** class doesn't exist ** (ex: $ create MyModel)
+* show: Prints the string representation of an instance based on the class name and id.
+      > Ex: $ show BaseModel 1234-1234-1234.
+    * If the class name is missing, print
+      > ** class name missing ** (ex: $ show)
+    * If the class name doesn’t exist, print
+      > ** class doesn't exist ** (ex: $ show MyModel)
+    * If the id is missing, print
+      > ** instance id missing ** (ex: $ show BaseModel)
+    * If the instance of the class name doesn’t exist for the id, print
+      > ** no instance found ** (ex: $ show BaseModel 121212)
+* destroy: Deletes an instance based on the class name and id (save the change into the JSON file).
+      > Ex: $ destroy BaseModel 1234-1234-1234.
+    * If the class name is missing, print
+      > ** class name missing ** (ex: $ destroy)
+    * If the class name doesn’t exist, print
+      > ** class doesn't exist ** (ex:$ destroy MyModel)
+    * If the id is missing, print
+      > ** instance id missing ** (ex: $ destroy BaseModel)
+    * If the instance of the class name doesn’t exist for the id, print
+      > ** no instance found ** (ex: $ destroy BaseModel 121212)
+* all: Prints all string representation of all instances based or not on the class name.
+      > Ex: $ all BaseModel or $ all.
+    * The printed result must be a list of strings (like the example below)
+    * If the class name doesn’t exist, print
+      > ** class doesn't exist ** (ex: $ all MyModel)
+* update: Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file).
+    > Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com".
+    > Usage: update <class name> <id> <attribute name> "<attribute value>"
+    * Only one attribute can be updated at the time
+    * You can assume the attribute name is valid (exists for this model)
+    * The attribute value must be casted to the attribute type
+    * If the class name is missing, print > ** class name missing ** (ex: $ update)
+    * If the class name doesn’t exist, print > ** class doesn't exist ** (ex: $ update MyModel)
+    * If the id is missing, print > ** instance id missing ** (ex: $ update BaseModel)
+    * If the instance of the class name doesn’t exist for the id, print > ** no instance found ** (ex: $ update BaseModel 121212)
+    * If the attribute name is missing, print ** attribute name missing > ** (ex: $ update BaseModel existing-id)
+    * If the value for the attribute name doesn’t exist, print > ** value missing ** (ex: $ update BaseModel existing-id first_name)
+    * All other arguments should not be used
+    > (Ex: $ update BaseModel 1234-1234-1234 email "aibnb@mail.com" first_name "Betty" = $ update BaseModel 1234-1234-1234 email "aibnb@mail.com")
+    * id, created_at and updated_at cant’ be updated. You can assume they won’t be passed in the update command
+    * Only “simple” arguments can be updated: string, integer and float. You can assume nobody will try to update list of ids or datetime
+* Let’s add some rules:
+
+    * You can assume arguments are always in the right order
+    * Each arguments are separated by a space
+    * A string argument with a space must be between double quote
+    * The error management starts from the first argument to the last one
+
+**You can test like this**
+
+~~~
+guillaume@ubuntu:~/AirBnB$ ./console.py
+(hbnb) all MyModel
+** class doesn't exist **
+(hbnb) show BaseModel
+** instance id missing **
+(hbnb) show BaseModel My_First_Model
+** no instance found **
+(hbnb) create BaseModel
+49faff9a-6318-451f-87b6-910505c55907
+(hbnb) all BaseModel
+["[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}"]
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}
+(hbnb) destroy
+** class name missing **
+(hbnb) update BaseModel 49faff9a-6318-451f-87b6-910505c55907 first_name "Betty"
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}
+(hbnb) create BaseModel
+2dd6ef5c-467c-4f82-9521-a772ea7d84e9
+(hbnb) all BaseModel
+["[BaseModel] (2dd6ef5c-467c-4f82-9521-a772ea7d84e9) {'id': '2dd6ef5c-467c-4f82-9521-a772ea7d84e9', 'created_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639717), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 23, 639724)}", "[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2017, 10, 2, 3, 11, 3, 49401)}"]
+(hbnb) destroy BaseModel 49faff9a-6318-451f-87b6-910505c55907
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+** no instance found **
+(hbnb)
+~~~
+
+### [Task 8 First User] <a name="task-8-first-user"></a>
+
+Write a class User that inherits from BaseModel:
+
+- models/user.py
+- Public class attributes:
+- email: string - empty string
+- password: string - empty string
+- first_name: string - empty string
+- last_name: string - empty string
+- Update FileStorage to manage correctly serialization and deserialization of User.
+
+**Update your command interpreter (console.py) to allow show, create, destroy, update and all used with User.**
+
+**you can test using this file**
+~~~
+guillaume@ubuntu:~/AirBnB$ cat test_save_reload_user.py
+#!/usr/bin/python3
+from models import storage
+from models.base_model import BaseModel
+from models.user import User
+
+all_objs = storage.all()
+print("-- Reloaded objects --")
+for obj_id in all_objs.keys():
+    obj = all_objs[obj_id]
+    print(obj)
+
+print("-- Create a new User --")
+my_user = User()
+my_user.first_name = "Betty"
+my_user.last_name = "Bar"
+my_user.email = "airbnb@mail.com"
+my_user.password = "root"
+my_user.save()
+print(my_user)
+
+print("-- Create a new User 2 --")
+my_user2 = User()
+my_user2.first_name = "John"
+my_user2.email = "airbnb2@mail.com"
+my_user2.password = "root"
+my_user2.save()
+print(my_user2)
+~~~
+output be like this
+~~~
+guillaume@ubuntu:~/AirBnB$ cat file.json ; echo ""
+{"BaseModel.2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4": {"__class__": "BaseModel", "id": "2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4", "updated_at": "2017-09-28T21:11:14.333862", "created_at": "2017-09-28T21:11:14.333852"}, "BaseModel.a42ee380-c959-450e-ad29-c840a898cfce": {"__class__": "BaseModel", "id": "a42ee380-c959-450e-ad29-c840a898cfce", "updated_at": "2017-09-28T21:11:15.504296", "created_at": "2017-09-28T21:11:15.504287"}, "BaseModel.af9b4cbd-2ce1-4e6e-8259-f578097dd15f": {"__class__": "BaseModel", "id": "af9b4cbd-2ce1-4e6e-8259-f578097dd15f", "updated_at": "2017-09-28T21:11:12.971544", "created_at": "2017-09-28T21:11:12.971521"}, "BaseModel.38a22b25-ae9c-4fa9-9f94-59b3eb51bfba": {"__class__": "BaseModel", "id": "38a22b25-ae9c-4fa9-9f94-59b3eb51bfba", "updated_at": "2017-09-28T21:11:13.753347", "created_at": "2017-09-28T21:11:13.753337"}, "BaseModel.9bf17966-b092-4996-bd33-26a5353cccb4": {"__class__": "BaseModel", "id": "9bf17966-b092-4996-bd33-26a5353cccb4", "updated_at": "2017-09-28T21:11:14.963058", "created_at": "2017-09-28T21:11:14.963049"}}
+guillaume@ubuntu:~/AirBnB$
+guillaume@ubuntu:~/AirBnB$ ./test_save_reload_user.py
+-- Reloaded objects --
+[BaseModel] (38a22b25-ae9c-4fa9-9f94-59b3eb51bfba) {'id': '38a22b25-ae9c-4fa9-9f94-59b3eb51bfba', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 13, 753337), 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 13, 753347)}
+[BaseModel] (9bf17966-b092-4996-bd33-26a5353cccb4) {'id': '9bf17966-b092-4996-bd33-26a5353cccb4', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 14, 963049), 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 14, 963058)}
+[BaseModel] (2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4) {'id': '2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 14, 333852), 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 14, 333862)}
+[BaseModel] (a42ee380-c959-450e-ad29-c840a898cfce) {'id': 'a42ee380-c959-450e-ad29-c840a898cfce', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 15, 504287), 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 15, 504296)}
+[BaseModel] (af9b4cbd-2ce1-4e6e-8259-f578097dd15f) {'id': 'af9b4cbd-2ce1-4e6e-8259-f578097dd15f', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 12, 971521), 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 12, 971544)}
+-- Create a new User --
+[User] (38f22813-2753-4d42-b37c-57a17f1e4f88) {'id': '38f22813-2753-4d42-b37c-57a17f1e4f88', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 42, 848279), 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 42, 848291), 'email': 'airbnb@mail.com', 'first_name': 'Betty', 'last_name': 'Bar', 'password': 'root'}
+-- Create a new User 2 --
+[User] (d0ef8146-4664-4de5-8e89-096d667b728e) {'id': 'd0ef8146-4664-4de5-8e89-096d667b728e', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 42, 848280), 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 42, 848294), 'email': 'airbnb2@mail.com', 'first_name': 'John', 'password': 'root'}
+guillaume@ubuntu:~/AirBnB$
+guillaume@ubuntu:~/AirBnB$ cat file.json ; echo ""
+{"BaseModel.af9b4cbd-2ce1-4e6e-8259-f578097dd15f": {"id": "af9b4cbd-2ce1-4e6e-8259-f578097dd15f", "updated_at": "2017-09-28T21:11:12.971544", "created_at": "2017-09-28T21:11:12.971521", "__class__": "BaseModel"}, "BaseModel.38a22b25-ae9c-4fa9-9f94-59b3eb51bfba": {"id": "38a22b25-ae9c-4fa9-9f94-59b3eb51bfba", "updated_at": "2017-09-28T21:11:13.753347", "created_at": "2017-09-28T21:11:13.753337", "__class__": "BaseModel"}, "BaseModel.9bf17966-b092-4996-bd33-26a5353cccb4": {"id": "9bf17966-b092-4996-bd33-26a5353cccb4", "updated_at": "2017-09-28T21:11:14.963058", "created_at": "2017-09-28T21:11:14.963049", "__class__": "BaseModel"}, "BaseModel.2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4": {"id": "2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4", "updated_at": "2017-09-28T21:11:14.333862", "created_at": "2017-09-28T21:11:14.333852", "__class__": "BaseModel"}, "BaseModel.a42ee380-c959-450e-ad29-c840a898cfce": {"id": "a42ee380-c959-450e-ad29-c840a898cfce", "updated_at": "2017-09-28T21:11:15.504296", "created_at": "2017-09-28T21:11:15.504287", "__class__": "BaseModel"}, "User.38f22813-2753-4d42-b37c-57a17f1e4f88": {"id": "38f22813-2753-4d42-b37c-57a17f1e4f88", "created_at": "2017-09-28T21:11:42.848279", "updated_at": "2017-09-28T21:11:42.848291", "email": "airbnb@mail.com", "first_name": "Betty", "__class__": "User", "last_name": "Bar", "password": "root"}, "User.d0ef8146-4664-4de5-8e89-096d667b728e": {"id": "d0ef8146-4664-4de5-8e89-096d667b728e", "created_at": "2017-09-28T21:11:42.848280", "updated_at": "2017-09-28T21:11:42.848294", "email": "airbnb_2@mail.com", "first_name": "John", "__class__": "User", "password": "root"}}
+guillaume@ubuntu:~/AirBnB$ 
+guillaume@ubuntu:~/AirBnB$ ./test_save_reload_user.py
+-- Reloaded objects --
+[BaseModel] (af9b4cbd-2ce1-4e6e-8259-f578097dd15f) {'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 12, 971544), 'id': 'af9b4cbd-2ce1-4e6e-8259-f578097dd15f', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 12, 971521)}
+[BaseModel] (2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4) {'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 14, 333862), 'id': '2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 14, 333852)}
+[BaseModel] (9bf17966-b092-4996-bd33-26a5353cccb4) {'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 14, 963058), 'id': '9bf17966-b092-4996-bd33-26a5353cccb4', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 14, 963049)}
+[BaseModel] (a42ee380-c959-450e-ad29-c840a898cfce) {'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 15, 504296), 'id': 'a42ee380-c959-450e-ad29-c840a898cfce', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 15, 504287)}
+[BaseModel] (38a22b25-ae9c-4fa9-9f94-59b3eb51bfba) {'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 13, 753347), 'id': '38a22b25-ae9c-4fa9-9f94-59b3eb51bfba', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 13, 753337)}
+[User] (38f22813-2753-4d42-b37c-57a17f1e4f88) {'password': '63a9f0ea7bb98050796b649e85481845', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 42, 848279), 'email': 'airbnb@mail.com', 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 42, 848291), 'last_name': 'Bar', 'id': '38f22813-2753-4d42-b37c-57a17f1e4f88', 'first_name': 'Betty'}
+[User] (d0ef8146-4664-4de5-8e89-096d667b728e) {'password': '63a9f0ea7bb98050796b649e85481845', 'created_at': datetime.datetime(2017, 9, 28, 21, 11, 42, 848280), 'email': 'airbnb_2@mail.com', 'updated_at': datetime.datetime(2017, 9, 28, 21, 11, 42, 848294), 'id': 'd0ef8146-4664-4de5-8e89-096d667b728e', 'first_name': 'John'}
+-- Create a new User --
+[User] (246c227a-d5c1-403d-9bc7-6a47bb9f0f68) {'password': 'root', 'created_at': datetime.datetime(2017, 9, 28, 21, 12, 19, 611352), 'email': 'airbnb@mail.com', 'updated_at': datetime.datetime(2017, 9, 28, 21, 12, 19, 611363), 'last_name': 'Bar', 'id': '246c227a-d5c1-403d-9bc7-6a47bb9f0f68', 'first_name': 'Betty'}
+-- Create a new User 2 --
+[User] (fce12f8a-fdb6-439a-afe8-2881754de71c) {'password': 'root', 'created_at': datetime.datetime(2017, 9, 28, 21, 12, 19, 611354), 'email': 'airbnb_2@mail.com', 'updated_at': datetime.datetime(2017, 9, 28, 21, 12, 19, 611368), 'id': 'fce12f8a-fdb6-439a-afe8-2881754de71c', 'first_name': 'John'}
+guillaume@ubuntu:~/AirBnB$
+guillaume@ubuntu:~/AirBnB$ cat file.json ; echo ""
+{"BaseModel.af9b4cbd-2ce1-4e6e-8259-f578097dd15f": {"updated_at": "2017-09-28T21:11:12.971544", "__class__": "BaseModel", "id": "af9b4cbd-2ce1-4e6e-8259-f578097dd15f", "created_at": "2017-09-28T21:11:12.971521"}, "User.38f22813-2753-4d42-b37c-57a17f1e4f88": {"password": "63a9f0ea7bb98050796b649e85481845", "created_at": "2017-09-28T21:11:42.848279", "email": "airbnb@mail.com", "id": "38f22813-2753-4d42-b37c-57a17f1e4f88", "last_name": "Bar", "updated_at": "2017-09-28T21:11:42.848291", "first_name": "Betty", "__class__": "User"}, "User.d0ef8146-4664-4de5-8e89-096d667b728e": {"password": "63a9f0ea7bb98050796b649e85481845", "created_at": "2017-09-28T21:11:42.848280", "email": "airbnb_2@mail.com", "id": "d0ef8146-4664-4de5-8e89-096d667b728e", "updated_at": "2017-09-28T21:11:42.848294", "first_name": "John", "__class__": "User"}, "BaseModel.9bf17966-b092-4996-bd33-26a5353cccb4": {"updated_at": "2017-09-28T21:11:14.963058", "__class__": "BaseModel", "id": "9bf17966-b092-4996-bd33-26a5353cccb4", "created_at": "2017-09-28T21:11:14.963049"}, "BaseModel.a42ee380-c959-450e-ad29-c840a898cfce": {"updated_at": "2017-09-28T21:11:15.504296", "__class__": "BaseModel", "id": "a42ee380-c959-450e-ad29-c840a898cfce", "created_at": "2017-09-28T21:11:15.504287"}, "BaseModel.38a22b25-ae9c-4fa9-9f94-59b3eb51bfba": {"updated_at": "2017-09-28T21:11:13.753347", "__class__": "BaseModel", "id": "38a22b25-ae9c-4fa9-9f94-59b3eb51bfba", "created_at": "2017-09-28T21:11:13.753337"}, "BaseModel.2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4": {"updated_at": "2017-09-28T21:11:14.333862", "__class__": "BaseModel", "id": "2bf3ebfd-a220-49ee-9ae6-b01c75f6f6a4", "created_at": "2017-09-28T21:11:14.333852"}, "User.246c227a-d5c1-403d-9bc7-6a47bb9f0f68": {"password": "root", "created_at": "2017-09-28T21:12:19.611352", "email": "airbnb@mail.com", "id": "246c227a-d5c1-403d-9bc7-6a47bb9f0f68", "last_name": "Bar", "updated_at": "2017-09-28T21:12:19.611363", "first_name": "Betty", "__class__": "User"}, "User.fce12f8a-fdb6-439a-afe8-2881754de71c": {"password": "root", "created_at": "2017-09-28T21:12:19.611354", "email": "airbnb_2@mail.com", "id": "fce12f8a-fdb6-439a-afe8-2881754de71c", "updated_at": "2017-09-28T21:12:19.611368", "first_name": "John", "__class__": "User"}}
+guillaume@ubuntu:~/AirBnB$
+~~~
+
+### [Task 9 More classes!] <a name="task-9-more-classes!"></a>
+
+Write all those classes that inherit from BaseModel:
+
+* State (models/state.py):
+   - Public class attributes:
+   - name: string - empty string
+
+* City (models/city.py):
+    - Public class attributes:
+    - state_id: string - empty string: it will be the State.id
+    - name: string - empty string
+
+* Amenity (models/amenity.py):
+    - Public class attributes:
+    - name: string - empty string
+
+* Place (models/place.py):
+    - Public class attributes:
+    - city_id: string - empty string: it will be the City.id
+    - user_id: string - empty string: it will be the User.id
+    - name: string - empty string
+    - description: string - empty string
+    - number_rooms: integer - 0
+    - number_bathrooms: integer - 0
+    - max_guest: integer - 0
+    - price_by_night: integer - 0
+    - latitude: float - 0.0
+    - longitude: float - 0.0
+    - amenity_ids: list of string - empty list: it will be the list of Amenity.id later
+
+* Review (models/review.py):
+    - Public class attributes:
+    - place_id: string - empty string: it will be the Place.id
+    - user_id: string - empty string: it will be the User.id
+    - text: string - empty string
+
+
+### [Task 10 Console 1.0] <a name="task-10-console-1.0"></a>
+
+Update FileStorage to manage correctly serialization and deserialization of all our new classes: Place, State, City, Amenity and Review
+
+Update your command interpreter (console.py) to allow those actions: show, create, destroy, update and all with all classes created previously.
+
+**_Enjoy your first console!_**
+
 
 
 
